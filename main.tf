@@ -1,6 +1,6 @@
 resource "aws_sns_topic" "this" {
   count        = var.enabled ? 1 : 0
-  name         = "${var.env}-${var.name}-nat-traffic"
+  name         = "${var.env}-${var.name}-nat-traffic-alarms"
   display_name = "${var.env}-${var.name}"
 }
 
@@ -13,13 +13,14 @@ resource "aws_sns_topic_subscription" "this" {
 }
 
 resource "aws_cloudwatch_metric_alarm" "output_traffic" {
+  count                     = var.enabled ? 1 : 0
   alarm_name                = "Output traffic"
   comparison_operator       = "GreaterThanOrEqualToThreshold"
-  evaluation_periods        = "2"
+  evaluation_periods        = var.evaluation_periods
   metric_name               = "BytesOutToSource"
   namespace                 = "AWS/NATGateway"
   period                    = var.period
-  statistic                 = "Sum"
+  statistic                 = var.statistic
   threshold                 = var.threshold
   alarm_description         = "This metric monitors NAT Gateway output traffic utilization"
   ok_actions                = [aws_sns_topic.this[0].arn]
@@ -29,14 +30,15 @@ resource "aws_cloudwatch_metric_alarm" "output_traffic" {
 }
 
 resource "aws_cloudwatch_metric_alarm" "input_traffic" {
+  count                     = var.enabled ? 1 : 0
   alarm_name                = "Input traffic"
   comparison_operator       = "GreaterThanOrEqualToThreshold"
-  evaluation_periods        = "2"
+  evaluation_periods        = var.evaluation_periods
   metric_name               = "BytesInToSource"
   namespace                 = "AWS/NATGateway"
   period                    = var.period
-  statistic                 = "Sum"
-  threshold                 = "10"
+  statistic                 = var.statistic
+  threshold                 = var.threshold
   alarm_description         = "This metric monitors NAT Gateway input traffic utilization"
   ok_actions                = [aws_sns_topic.this[0].arn]
   alarm_actions             = [aws_sns_topic.this[0].arn]
