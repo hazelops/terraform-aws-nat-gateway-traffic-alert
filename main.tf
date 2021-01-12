@@ -26,7 +26,10 @@ resource "aws_cloudwatch_metric_alarm" "output_traffic" {
   ok_actions                = [aws_sns_topic.this[0].arn]
   alarm_actions             = [aws_sns_topic.this[0].arn]
   insufficient_data_actions = [aws_sns_topic.this[0].arn]
-  treat_missing_data        = "breaching"
+  treat_missing_data        = "notBreaching"
+  dimensions = {
+    NatGatewayId = var.natgateway_id
+  }
 }
 
 resource "aws_cloudwatch_metric_alarm" "input_traffic" {
@@ -34,7 +37,7 @@ resource "aws_cloudwatch_metric_alarm" "input_traffic" {
   alarm_name                = "Input traffic"
   comparison_operator       = "GreaterThanOrEqualToThreshold"
   evaluation_periods        = var.evaluation_periods
-  metric_name               = "BytesInToSource"
+  metric_name               = "BytesInFromSource"
   namespace                 = "AWS/NATGateway"
   period                    = var.period
   statistic                 = var.statistic
@@ -43,5 +46,8 @@ resource "aws_cloudwatch_metric_alarm" "input_traffic" {
   ok_actions                = [aws_sns_topic.this[0].arn]
   alarm_actions             = [aws_sns_topic.this[0].arn]
   insufficient_data_actions = [aws_sns_topic.this[0].arn]
-  treat_missing_data        = "breaching"
+  treat_missing_data        = "notBreaching"
+  dimensions = {
+    NatGatewayId = var.natgateway_id
+  }
 }

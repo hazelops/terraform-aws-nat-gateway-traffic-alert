@@ -26,21 +26,25 @@ variable "subscription_endpoint_protocol" {
 }
 
 variable "evaluation_periods" {
-  default = "2"
+  default = "1"
   description = "The number of periods over which data is compared to the specified threshold"
 }
 
 variable "threshold" {
-  default = "100000000"
-  description = "The value against which the specified statistic is compared. By default is 100 million bytes"
+  default = "1000000"
+  description = "The value against which the specified statistic is compared. By default is 1 million bytes.If you use default settings you will be alarmed when throughput will be more than 1 millon byte in 60 seconds"
 }
 
 variable "statistic" {
-  default = "Sum"
+  default = "Maximum"
   description = "The statistic to apply to the alarm's associated metric. Either of the following is supported: SampleCount, Average, Sum, Minimum, Maximum"
 }
 
 variable "period" {
-  default = "180"
+  default = "60"
   description = "The period in seconds over which the specified stat is applied. Period must be 10, 30 or a multiple of 60"
+}
+
+variable "natgateway_id" {
+  description = "id of NAT Gateway"
 }
