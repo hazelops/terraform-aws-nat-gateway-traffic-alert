@@ -32,7 +32,7 @@ variable "evaluation_periods" {
 
 variable "threshold" {
   default = "1000000"
-  description = "The value against which the specified statistic is compared. By default is 1 million bytes.If you use default settings you will be alarmed when throughput will be more than 1 millon byte in 60 seconds"
+  description = "The value against which the specified statistic is compared. By default it is 1 million bytes.If you use default settings you will be alarmed when throughput will be more than 1 millon byte in 60 seconds"
 }
 
 variable "statistic" {
