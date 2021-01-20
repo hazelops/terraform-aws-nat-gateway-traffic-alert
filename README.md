@@ -17,10 +17,11 @@ This module provides settings:
 ```hcl
 
 module "nat_gateway_traffic" {
-  source = "../../terraform/terraform-nat-gateway-traffic-alert"
+  source = "hazelops/nat-gateway-traffic-alert/aws"
+  version = "~> 1.0"
   env = var.env
-  name = "nutcorp"
-  natgateway_id = "<NAT Gateway ID>"
+  name = "<name>"
+  natgateway_ids = "[NAT Gateway IDs]>"
   subscription_endpoint = "https://events.pagerduty.com/x-ere/<endpoint>"
 }
 
@@ -51,12 +52,12 @@ module "nat_gateway_traffic" {
 | env | n/a | `any` | n/a | yes |
 | evaluation\_periods | The number of periods over which data is compared to the specified threshold | `string` | `"1"` | no |
 | name | The name of the monitoring and name of the subscription service endpoint | `any` | n/a | yes |
-| natgateway\_id | id of NAT Gateway | `any` | n/a | yes |
+| natgateway\_ids | ids of NAT Gateways | `any` | n/a | yes |
 | period | The period in seconds over which the specified stat is applied. Period must be 10, 30 or a multiple of 60 | `string` | `"60"` | no |
 | statistic | The statistic to apply to the alarm's associated metric. Either of the following is supported: SampleCount, Average, Sum, Minimum, Maximum | `string` | `"Maximum"` | no |
 | subscription\_endpoint | Endpoint endpoint for SNS topic subscription, PagerDuty, Slack etc. | `any` | n/a | yes |
 | subscription\_endpoint\_protocol | Endpoint protocol for SNS topic subscription | `string` | `"https"` | no |
-| threshold | The value against which the specified statistic is compared. By default is 1 million bytes.If you use default settings you will be alarmed when throughput will be more than 1 millon byte in 60 seconds | `string` | `"1000000"` | no |
+| threshold | The value against which the specified statistic is compared. By default it is 1 million bytes.If you use default settings you will be alarmed when throughput will be more than 1 millon byte in 60 seconds | `string` | `"1000000"` | no |
 
 ## Outputs
 
@@ -72,4 +73,4 @@ module "nat_gateway_traffic" {
 ### Terraform Module Registry
 
 ![Hazelops logo](https://avatars0.githubusercontent.com/u/63737915?s=25&v=4) [Terraform-nat-gateway-traffic-alert
-](https://registry.terraform.io/modules/hazelops/)
+](https://registry.terraform.io/modules/hazelops/nat-gateway-traffic-alert/aws/latest)
