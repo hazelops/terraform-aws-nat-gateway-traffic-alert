@@ -18,6 +18,7 @@ This module provides settings:
 
 module "nat_gateway_traffic" {
   source = "hazelops/nat-gateway-traffic-alert/aws"
+  version = "~> 1.0"
   env = var.env
   name = "<name>"
   natgateway_ids = "[NAT Gateway IDs]>"
