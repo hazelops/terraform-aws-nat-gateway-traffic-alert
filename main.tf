@@ -13,8 +13,8 @@ resource "aws_sns_topic_subscription" "this" {
 }
 
 resource "aws_cloudwatch_metric_alarm" "output_traffic" {
-  count                     = var.enabled ? 1 : 0
-  alarm_name                = "Output traffic"
+  count                     = var.enabled ? length(var.natgateway_ids) : 0
+  alarm_name                = "Output traffic-${count.index}"
   comparison_operator       = "GreaterThanOrEqualToThreshold"
   evaluation_periods        = var.evaluation_periods
   metric_name               = "BytesOutToSource"
@@ -22,19 +22,19 @@ resource "aws_cloudwatch_metric_alarm" "output_traffic" {
   period                    = var.period
   statistic                 = var.statistic
   threshold                 = var.threshold
-  alarm_description         = "This metric monitors NAT Gateway output traffic utilization"
+  alarm_description         = "NAT Gateway output traffic utilization is over limit"
   ok_actions                = [aws_sns_topic.this[0].arn]
   alarm_actions             = [aws_sns_topic.this[0].arn]
   insufficient_data_actions = [aws_sns_topic.this[0].arn]
   treat_missing_data        = "notBreaching"
   dimensions = {
-    NatGatewayId = var.natgateway_id
+    NatGatewayId = var.natgateway_ids[count.index]
   }
 }
 
 resource "aws_cloudwatch_metric_alarm" "input_traffic" {
-  count                     = var.enabled ? 1 : 0
-  alarm_name                = "Input traffic"
+  count                     = var.enabled ? length(var.natgateway_ids) : 0
+  alarm_name                = "Input traffic-${count.index}"
   comparison_operator       = "GreaterThanOrEqualToThreshold"
   evaluation_periods        = var.evaluation_periods
   metric_name               = "BytesInFromSource"
@@ -42,12 +42,12 @@ resource "aws_cloudwatch_metric_alarm" "input_traffic" {
   period                    = var.period
   statistic                 = var.statistic
   threshold                 = var.threshold
-  alarm_description         = "This metric monitors NAT Gateway input traffic utilization"
+  alarm_description         = "NAT Gateway input traffic utilization is over limit"
   ok_actions                = [aws_sns_topic.this[0].arn]
   alarm_actions             = [aws_sns_topic.this[0].arn]
   insufficient_data_actions = [aws_sns_topic.this[0].arn]
   treat_missing_data        = "notBreaching"
   dimensions = {
-    NatGatewayId = var.natgateway_id
+    NatGatewayId = var.natgateway_ids[count.index]
   }
 }

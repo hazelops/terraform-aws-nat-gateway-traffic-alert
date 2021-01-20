@@ -45,6 +45,6 @@ variable "period" {
   description = "The period in seconds over which the specified stat is applied. Period must be 10, 30 or a multiple of 60"
 }
 
-variable "natgateway_id" {
-  description = "id of NAT Gateway"
+variable "natgateway_ids" {
+  description = "ids of NAT Gateways"
 }
