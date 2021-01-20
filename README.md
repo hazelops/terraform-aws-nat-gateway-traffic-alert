@@ -20,7 +20,7 @@ module "nat_gateway_traffic" {
   source = "hazelops/nat-gateway-traffic-alert/aws"
   env = var.env
   name = "<name>"
-  natgateway_id = "<NAT Gateway ID>"
+  natgateway_ids = "[NAT Gateway IDs]>"
   subscription_endpoint = "https://events.pagerduty.com/x-ere/<endpoint>"
 }
 
@@ -51,7 +51,7 @@ module "nat_gateway_traffic" {
 | env | n/a | `any` | n/a | yes |
 | evaluation\_periods | The number of periods over which data is compared to the specified threshold | `string` | `"1"` | no |
 | name | The name of the monitoring and name of the subscription service endpoint | `any` | n/a | yes |
-| natgateway\_id | id of NAT Gateway | `any` | n/a | yes |
+| natgateway\_ids | ids of NAT Gateways | `any` | n/a | yes |
 | period | The period in seconds over which the specified stat is applied. Period must be 10, 30 or a multiple of 60 | `string` | `"60"` | no |
 | statistic | The statistic to apply to the alarm's associated metric. Either of the following is supported: SampleCount, Average, Sum, Minimum, Maximum | `string` | `"Maximum"` | no |
 | subscription\_endpoint | Endpoint endpoint for SNS topic subscription, PagerDuty, Slack etc. | `any` | n/a | yes |
