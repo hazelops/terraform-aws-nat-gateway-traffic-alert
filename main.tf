@@ -1,7 +1,7 @@
 resource "aws_sns_topic" "this" {
   count        = var.enabled ? 1 : 0
-  name         = "${var.env}-${var.name}-nat-traffic-alarms"
-  display_name = "${var.env}-${var.name}"
+  name         = "${var.env}-nat-traffic-alarms"
+  display_name = "${var.env}-nat-traffic-alarms"
 }
 
 resource "aws_sns_topic_subscription" "this" {

@@ -6,10 +6,6 @@ variable "enabled" {
 
 variable "env" {}
 
-variable "name" {
-  description = "The name of the monitoring and name of the subscription service endpoint"
-}
-
 variable "subscription_endpoint" {
   description = "Endpoint endpoint for SNS topic subscription, PagerDuty, Slack etc."
 }
