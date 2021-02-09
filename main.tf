@@ -22,7 +22,7 @@ resource "aws_cloudwatch_metric_alarm" "output_traffic" {
   period                    = var.period
   statistic                 = var.statistic
   threshold                 = var.threshold
-  alarm_description         = "NAT Gateway output traffic utilization is over limit"
+  alarm_description         = "NAT gateway egress traffic utilization is over ${var.threshold/1024} MB in ${var.period} seconds"
   ok_actions                = [aws_sns_topic.this[0].arn]
   alarm_actions             = [aws_sns_topic.this[0].arn]
   insufficient_data_actions = [aws_sns_topic.this[0].arn]
@@ -42,7 +42,7 @@ resource "aws_cloudwatch_metric_alarm" "input_traffic" {
   period                    = var.period
   statistic                 = var.statistic
   threshold                 = var.threshold
-  alarm_description         = "NAT Gateway input traffic utilization is over limit"
+  alarm_description         = "NAT gateway ingress traffic utilization is over ${var.threshold/1024} MB in ${var.period} seconds"
   ok_actions                = [aws_sns_topic.this[0].arn]
   alarm_actions             = [aws_sns_topic.this[0].arn]
   insufficient_data_actions = [aws_sns_topic.this[0].arn]
